@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+data/raw/
+data/processed/
+models/*.pt
+models/*.pth
+outputs/*.png
+outputs/*.jpg
+.idea/
+.DS_Store
+kaggle.json
