@@ -10,7 +10,6 @@ from models import Generator
 # Definizione del dispositivo e parametri
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 IMAGE_SIZE = 256
-LATENT_DIM = 512
 
 # Risoluzione dinamica dei percorsi
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -21,11 +20,11 @@ photo2sketch_path = os.path.join(CHECKPOINT_DIR, 'G_photo2sketch_final.pt')
 sketch2photo_path = os.path.join(CHECKPOINT_DIR, 'G_sketch2photo_final.pt')
 
 # Inizializzazione e caricamento dei modelli
-G_photo2sketch = Generator(latent_dim=LATENT_DIM, image_size=IMAGE_SIZE).to(DEVICE)
+G_photo2sketch = Generator().to(DEVICE)
 G_photo2sketch.load_state_dict(torch.load(photo2sketch_path, map_location=DEVICE))
 G_photo2sketch.eval()
 
-G_sketch2photo = Generator(latent_dim=LATENT_DIM, image_size=IMAGE_SIZE).to(DEVICE)
+G_sketch2photo = Generator().to(DEVICE)
 G_sketch2photo.load_state_dict(torch.load(sketch2photo_path, map_location=DEVICE))
 G_sketch2photo.eval()
 
@@ -159,4 +158,4 @@ with gr.Blocks(title="Face Sketch CycleGAN+VAE") as demo:
         )
 
 if __name__ == '__main__':
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)
